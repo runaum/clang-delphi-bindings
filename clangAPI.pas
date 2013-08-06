@@ -58,6 +58,7 @@ type
   size_t    = {$IFDEF CPUX64}UInt64{$ELSE}Cardinal{$ENDIF};
   psize_t   = ^size_t;
   off_t     = Int64;     // #WARNING
+  time_t    = Int64;     // #WARNING
 
 type
 //*=============================================== START of CXString.h ================================================*//
@@ -564,9 +565,9 @@ type
  *)
   //CINDEX_LINKAGE void clang_CXIndex_setGlobalOptions(CXIndex, unsigned options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_CXIndex_setGlobalOptions = procedure(unknown: CXIndex; options: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_CXIndex_setGlobalOptions(unknown: CXIndex; options: Cardinal); cdecl; external CLangLibrary name 'clang_CXIndex_setGlobalOptions';
 {$ENDIF}
 
 (*
@@ -577,9 +578,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_CXIndex_getGlobalOptions(CXIndex);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_CXIndex_getGlobalOptions = function(unknown: CXIndex): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_CXIndex_getGlobalOptions(unknown: CXIndex): Cardinal; cdecl; external CLangLibrary name 'clang_CXIndex_getGlobalOptions';
 {$ENDIF}
 
 (*
@@ -599,9 +600,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_getFileName(CXFile SFile);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getFileName = function(SFile: CXFile): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFileName(SFile: CXFile): CXString; cdecl; external CLangLibrary name 'clang_getFileName';
 {$ENDIF}
 
 (*
@@ -609,9 +610,9 @@ type
  *)
   //CINDEX_LINKAGE time_t clang_getFileTime(CXFile SFile);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): time_t; cdecl;
+  Tclang_getFileTime = function(SFile: CXFile): time_t; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): time_t; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFileTime(SFile: CXFile): time_t; cdecl; external CLangLibrary name 'clang_getFileTime';
 {$ENDIF}
 
 (*
@@ -635,9 +636,9 @@ type
  *)
   //CINDEX_LINKAGE int clang_getFileUniqueID(CXFile file, CXFileUniqueID *outID);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_getFileUniqueID = function(file_: CXFile; var outID: CXFileUniqueID): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFileUniqueID(file_: CXFile; var outID: CXFileUniqueID): Integer; cdecl; external CLangLibrary name 'clang_getFileUniqueID';
 {$ENDIF}
 
 (*
@@ -648,9 +649,9 @@ type
   //CINDEX_LINKAGE unsigned 
   //clang_isFileMultipleIncludeGuarded(CXTranslationUnit tu, CXFile file);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isFileMultipleIncludeGuarded = function(tu: CXTranslationUnit; file_: CXFile): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isFileMultipleIncludeGuarded(tu: CXTranslationUnit; file_: CXFile): Cardinal; cdecl; external CLangLibrary name 'clang_isFileMultipleIncludeGuarded';
 {$ENDIF}
 
 (*
@@ -666,9 +667,9 @@ type
   //CINDEX_LINKAGE CXFile clang_getFile(CXTranslationUnit tu,
   //                                    const char *file_name);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl;
+  Tclang_getFile = function(tu: CXTranslationUnit; file_name: PAnsiChar): CXFile; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFile(tu: CXTranslationUnit; file_name: PAnsiChar): CXFile; cdecl; external CLangLibrary name 'clang_getFile';
 {$ENDIF}
 
 (*
@@ -722,9 +723,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceLocation clang_getNullLocation(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getNullLocation = function(): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNullLocation(): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getNullLocation';
 {$ENDIF}
 
 (*
@@ -738,9 +739,9 @@ type
   //CINDEX_LINKAGE unsigned clang_equalLocations(CXSourceLocation loc1,
   //                                             CXSourceLocation loc2);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_equalLocations = function(loc1: CXSourceLocation; loc2: CXSourceLocation): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_equalLocations(loc1: CXSourceLocation; loc2: CXSourceLocation): Cardinal; cdecl; external CLangLibrary name 'clang_equalLocations';
 {$ENDIF}
 
 (*
@@ -752,9 +753,9 @@ type
   //                                                  unsigned line,
   //                                                  unsigned column);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getLocation = function(tu: CXTranslationUnit; file_: CXFile; line: Cardinal; column: Cardinal): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getLocation(tu: CXTranslationUnit; file_: CXFile; line: Cardinal; column: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getLocation';
 {$ENDIF}
 (*
  * \brief Retrieves the source location associated with a given character offset
@@ -764,9 +765,9 @@ type
   //                                                           CXFile file,
   //                                                           unsigned offset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getLocationForOffset = function(tu: CXTranslationUnit; file_: CXFile; offset: Cardinal): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getLocationForOffset(tu: CXTranslationUnit; file_: CXFile; offset: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getLocationForOffset';
 {$ENDIF}
 
 (*
@@ -774,9 +775,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceRange clang_getNullRange(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getNullRange = function(): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNullRange(): CXSourceRange; cdecl; external CLangLibrary name 'clang_getNullRange';
 {$ENDIF}
 
 (*
@@ -786,9 +787,9 @@ type
   //CINDEX_LINKAGE CXSourceRange clang_getRange(CXSourceLocation begin,
   //                                            CXSourceLocation end);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getRange = function(begin_: CXSourceLocation; end_: CXSourceLocation): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getRange(begin_: CXSourceLocation; end_: CXSourceLocation): CXSourceRange; cdecl; external CLangLibrary name 'clang_getRange';
 {$ENDIF}
 
 (*
@@ -799,9 +800,9 @@ type
   //CINDEX_LINKAGE unsigned clang_equalRanges(CXSourceRange range1,
   //                                          CXSourceRange range2);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_equalRanges = function(range1: CXSourceRange; range2: CXSourceRange): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_equalRanges(range1: CXSourceRange; range2: CXSourceRange): Cardinal; cdecl; external CLangLibrary name 'clang_equalRanges';
 {$ENDIF}
 
 (*
@@ -809,9 +810,9 @@ type
  *)
   //CINDEX_LINKAGE int clang_Range_isNull(CXSourceRange range);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_Range_isNull = function(range: CXSourceRange): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Range_isNull(range: CXSourceRange): Integer; cdecl; external CLangLibrary name 'clang_Range_isNull';
 {$ENDIF}
 
 (*
@@ -842,9 +843,9 @@ type
   //                                               unsigned *column,
   //                                               unsigned *offset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getExpansionLocation = procedure(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getExpansionLocation(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl; external CLangLibrary name 'clang_getExpansionLocation';
 {$ENDIF}
 
 (*
@@ -892,9 +893,9 @@ type
   //                                              unsigned *line,
   //                                              unsigned *column);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getPresumedLocation = procedure(location: CXSourceLocation; var filename: CXString; var line: Cardinal; var column: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getPresumedLocation(location: CXSourceLocation; var filename: CXString; var line: Cardinal; var column: Cardinal); cdecl; external CLangLibrary name 'clang_getPresumedLocation';
 {$ENDIF}
 
 (*
@@ -911,9 +912,9 @@ type
   //                                                   unsigned *column,
   //                                                   unsigned *offset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getInstantiationLocation = procedure(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getInstantiationLocation(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl; external CLangLibrary name 'clang_getInstantiationLocation';
 {$ENDIF}
 
 (*
@@ -944,9 +945,9 @@ type
   //                                              unsigned *column,
   //                                              unsigned *offset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getSpellingLocation = procedure(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getSpellingLocation(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl; external CLangLibrary name 'clang_getSpellingLocation';
 {$ENDIF}
 
 (*
@@ -978,9 +979,9 @@ type
   //                                          unsigned *column,
   //                                          unsigned *offset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getFileLocation = procedure(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getFileLocation(location: CXSourceLocation; var file_: CXFile; var line: Cardinal; var column: Cardinal; var offset: Cardinal); cdecl; external CLangLibrary name 'clang_getFileLocation';
 {$ENDIF}
 
 (*
@@ -989,9 +990,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceLocation clang_getRangeStart(CXSourceRange range);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getRangeStart = function(range: CXSourceRange): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getRangeStart(range: CXSourceRange): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getRangeStart';
 {$ENDIF}
 
 (*
@@ -1000,9 +1001,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceLocation clang_getRangeEnd(CXSourceRange range);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getRangeEnd = function(range: CXSourceRange): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getRangeEnd(range: CXSourceRange): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getRangeEnd';
 {$ENDIF}
 
 (*
@@ -1075,9 +1076,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_getNumDiagnosticsInSet(CXDiagnosticSet Diags);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getNumDiagnosticsInSet = function(Diags: CXDiagnosticSet): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNumDiagnosticsInSet(Diags: CXDiagnosticSet): Cardinal; cdecl; external CLangLibrary name 'clang_getNumDiagnosticsInSet';
 {$ENDIF}
 
 (*
@@ -1092,9 +1093,9 @@ type
   //CINDEX_LINKAGE CXDiagnostic clang_getDiagnosticInSet(CXDiagnosticSet Diags,
   //                                                     unsigned Index);  
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnostic; cdecl;
+  Tclang_getDiagnosticInSet = function(Diags: CXDiagnosticSet; Index: Cardinal): CXDiagnostic; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnostic; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticInSet(Diags: CXDiagnosticSet; Index: Cardinal): CXDiagnostic; cdecl; external CLangLibrary name 'clang_getDiagnosticInSet';
 {$ENDIF}
 
 
@@ -1150,9 +1151,9 @@ type
   //                                                  enum CXLoadDiag_Error *error,
   //                                                  CXString *errorString);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl;
+  Tclang_loadDiagnostics = function(file_: PAnsiChar; var error: CXLoadDiag_Error; var errorString: CXString): CXDiagnosticSet; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl; external CLangLibrary name 'XXXX';
+  function clang_loadDiagnostics(file_: PAnsiChar; var error: CXLoadDiag_Error; var errorString: CXString): CXDiagnosticSet; cdecl; external CLangLibrary name 'clang_loadDiagnostics';
 {$ENDIF}
 
 (*
@@ -1160,9 +1161,9 @@ type
  *)
   //CINDEX_LINKAGE void clang_disposeDiagnosticSet(CXDiagnosticSet Diags);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeDiagnosticSet = procedure(Diags: CXDiagnosticSet); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeDiagnosticSet(Diags: CXDiagnosticSet); cdecl; external CLangLibrary name 'clang_disposeDiagnosticSet';
 {$ENDIF}
 
 (*
@@ -1173,9 +1174,9 @@ type
  *)
   //CINDEX_LINKAGE CXDiagnosticSet clang_getChildDiagnostics(CXDiagnostic D);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl;
+  Tclang_getChildDiagnostics = function(D: CXDiagnostic): CXDiagnosticSet; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getChildDiagnostics(D: CXDiagnostic): CXDiagnosticSet; cdecl; external CLangLibrary name 'clang_getChildDiagnostics';
 {$ENDIF}
 
 (*
@@ -1184,9 +1185,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_getNumDiagnostics(CXTranslationUnit Unit);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getNumDiagnostics = function(Unit_: CXTranslationUnit): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNumDiagnostics(Unit_: CXTranslationUnit): Cardinal; cdecl; external CLangLibrary name 'clang_getNumDiagnostics';
 {$ENDIF}
 
 (*
@@ -1201,9 +1202,9 @@ type
   //CINDEX_LINKAGE CXDiagnostic clang_getDiagnostic(CXTranslationUnit Unit,
   //                                                unsigned Index);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnostic; cdecl;
+  Tclang_getDiagnostic = function(Unit_: CXTranslationUnit; Index: Cardinal): CXDiagnostic; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnostic; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnostic(Unit_: CXTranslationUnit; Index: Cardinal): CXDiagnostic; cdecl; external CLangLibrary name 'clang_getDiagnostic';
 {$ENDIF}
 
 (*
@@ -1215,9 +1216,9 @@ type
   //CINDEX_LINKAGE CXDiagnosticSet
   //clang_getDiagnosticSetFromTU(CXTranslationUnit Unit);  
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl;
+  Tclang_getDiagnosticSetFromTU = function(Unit_: CXTranslationUnit): CXDiagnosticSet; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSet; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticSetFromTU(Unit_: CXTranslationUnit): CXDiagnosticSet; cdecl; external CLangLibrary name 'clang_getDiagnosticSetFromTU';
 {$ENDIF}
 
 (*
@@ -1225,9 +1226,9 @@ type
  *)
   //CINDEX_LINKAGE void clang_disposeDiagnostic(CXDiagnostic Diagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeDiagnostic = procedure(Diagnostic: CXDiagnostic); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeDiagnostic(Diagnostic: CXDiagnostic); cdecl; external CLangLibrary name 'clang_disposeDiagnostic';
 {$ENDIF}
 
 (*
@@ -1324,9 +1325,9 @@ type
   //CINDEX_LINKAGE CXString clang_formatDiagnostic(CXDiagnostic Diagnostic,
   //                                               unsigned Options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_formatDiagnostic = function(Diagnostic: CXDiagnostic; Options: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_formatDiagnostic(Diagnostic: CXDiagnostic; Options: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_formatDiagnostic';
 {$ENDIF}
 
 (*
@@ -1338,9 +1339,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_defaultDiagnosticDisplayOptions(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_defaultDiagnosticDisplayOptions = function(): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_defaultDiagnosticDisplayOptions(): Cardinal; cdecl; external CLangLibrary name 'clang_defaultDiagnosticDisplayOptions';
 {$ENDIF}
 
 (*
@@ -1349,9 +1350,9 @@ type
   //CINDEX_LINKAGE enum CXDiagnosticSeverity
   //clang_getDiagnosticSeverity(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSeverity; cdecl;
+  Tclang_getDiagnosticSeverity = function(unknown: CXDiagnostic): CXDiagnosticSeverity; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXDiagnosticSeverity; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticSeverity(unknown: CXDiagnostic): CXDiagnosticSeverity; cdecl; external CLangLibrary name 'clang_getDiagnosticSeverity';
 {$ENDIF}
 
 (*
@@ -1362,9 +1363,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceLocation clang_getDiagnosticLocation(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getDiagnosticLocation = function(unknown: CXDiagnostic): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticLocation(unknown: CXDiagnostic): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getDiagnosticLocation';
 {$ENDIF}
 
 (*
@@ -1372,9 +1373,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_getDiagnosticSpelling(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDiagnosticSpelling = function(unknown: CXDiagnostic): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticSpelling(unknown: CXDiagnostic): CXString; cdecl; external CLangLibrary name 'clang_getDiagnosticSpelling';
 {$ENDIF}
 
 (*
@@ -1392,9 +1393,9 @@ type
   //CINDEX_LINKAGE CXString clang_getDiagnosticOption(CXDiagnostic Diag,
   //                                                  CXString *Disable);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDiagnosticOption = function(Diag: CXDiagnostic; var Disable: CXString): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticOption(Diag: CXDiagnostic; var Disable: CXString): CXString; cdecl; external CLangLibrary name 'clang_getDiagnosticOption';
 {$ENDIF}
 
 (*
@@ -1409,9 +1410,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_getDiagnosticCategory(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getDiagnosticCategory = function(unknown: CXDiagnostic): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticCategory(unknown: CXDiagnostic): Cardinal; cdecl; external CLangLibrary name 'clang_getDiagnosticCategory';
 {$ENDIF}
 
 (*
@@ -1427,9 +1428,9 @@ type
   //CINDEX_DEPRECATED CINDEX_LINKAGE
   //CXString clang_getDiagnosticCategoryName(unsigned Category);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDiagnosticCategoryName = function(Category: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticCategoryName(Category: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_getDiagnosticCategoryName';
 {$ENDIF}
 
 (*
@@ -1439,9 +1440,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_getDiagnosticCategoryText(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDiagnosticCategoryText = function(unknown: CXDiagnostic): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticCategoryText(unknown: CXDiagnostic): CXString; cdecl; external CLangLibrary name 'clang_getDiagnosticCategoryText';
 {$ENDIF}
   
 (*
@@ -1450,9 +1451,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_getDiagnosticNumRanges(CXDiagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getDiagnosticNumRanges = function(unknown: CXDiagnostic): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticNumRanges(unknown: CXDiagnostic): Cardinal; cdecl; external CLangLibrary name 'clang_getDiagnosticNumRanges';
 {$ENDIF}
 
 (*
@@ -1471,9 +1472,9 @@ type
   //CINDEX_LINKAGE CXSourceRange clang_getDiagnosticRange(CXDiagnostic Diagnostic,
   //                                                      unsigned Range);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getDiagnosticRange = function(Diagnostic: CXDiagnostic; Range: Cardinal): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticRange(Diagnostic: CXDiagnostic; Range: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'clang_getDiagnosticRange';
 {$ENDIF}
 
 (*
@@ -1482,9 +1483,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_getDiagnosticNumFixIts(CXDiagnostic Diagnostic);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getDiagnosticNumFixIts = function(Diagnostic: CXDiagnostic): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticNumFixIts(Diagnostic: CXDiagnostic): Cardinal; cdecl; external CLangLibrary name 'clang_getDiagnosticNumFixIts';
 {$ENDIF}
 
 (*
@@ -1516,9 +1517,9 @@ type
   //                                                 unsigned FixIt,
   //                                                 CXSourceRange *ReplacementRange);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDiagnosticFixIt = function(Diagnostic: CXDiagnostic; FixIt: Cardinal; var ReplacementRange: CXSourceRange): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDiagnosticFixIt(Diagnostic: CXDiagnostic; FixIt: Cardinal; var ReplacementRange: CXSourceRange): CXString; cdecl; external CLangLibrary name 'clang_getDiagnosticFixIt';
 {$ENDIF}
 
 (*
@@ -1541,9 +1542,9 @@ type
   //CINDEX_LINKAGE CXString
   //clang_getTranslationUnitSpelling(CXTranslationUnit CTUnit);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getTranslationUnitSpelling = function(CTUnit: CXTranslationUnit): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTranslationUnitSpelling(CTUnit: CXTranslationUnit): CXString; cdecl; external CLangLibrary name 'clang_getTranslationUnitSpelling';
 {$ENDIF}
 
 (*
@@ -1594,9 +1595,9 @@ type
   //                                         unsigned num_unsaved_files,
   //                                         struct CXUnsavedFile *unsaved_files);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl;
+  Tclang_createTranslationUnitFromSourceFile = function(CIdx: CXIndex; source_filename: PAnsiChar; num_clang_command_line_args: Integer; clang_command_line_args: PAnsiChar; num_unsaved_files: Cardinal; unsaved_files: ^CXUnsavedFile): CXTranslationUnit; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl; external CLangLibrary name 'XXXX';
+  function clang_createTranslationUnitFromSourceFile(CIdx: CXIndex; source_filename: PAnsiChar; num_clang_command_line_args: Integer; clang_command_line_args: PAnsiChar; num_unsaved_files: Cardinal; unsaved_files: ^CXUnsavedFile): CXTranslationUnit; cdecl; external CLangLibrary name 'clang_createTranslationUnitFromSourceFile';
 {$ENDIF}
 
 (*
@@ -1605,9 +1606,9 @@ type
   //CINDEX_LINKAGE CXTranslationUnit clang_createTranslationUnit(CXIndex,
   //                                             const char *ast_filename);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl;
+  Tclang_createTranslationUnit = function(unknown: CXIndex; ast_filename: PAnsiChar): CXTranslationUnit; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl; external CLangLibrary name 'XXXX';
+  function clang_createTranslationUnit(unknown: CXIndex; ast_filename: PAnsiChar): CXTranslationUnit; cdecl; external CLangLibrary name 'clang_createTranslationUnit';
 {$ENDIF}
 
 (*
@@ -1733,9 +1734,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_defaultEditingTranslationUnitOptions(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_defaultEditingTranslationUnitOptions = function(): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_defaultEditingTranslationUnitOptions(): Cardinal; cdecl; external CLangLibrary name 'clang_defaultEditingTranslationUnitOptions';
 {$ENDIF}
   
 (*
@@ -1788,9 +1789,9 @@ type
   //                                                     unsigned num_unsaved_files,
   //                                                            unsigned options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl;
+  Tclang_parseTranslationUnit = function(CIdx: CXIndex; source_filename: PAnsiChar; command_line_args: PAnsiChar; num_command_line_args: Integer; unsaved_files: ^CXUnsavedFile; num_unsaved_files: Cardinal; options: Cardinal): CXTranslationUnit; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl; external CLangLibrary name 'XXXX';
+  function clang_parseTranslationUnit(CIdx: CXIndex; source_filename: PAnsiChar; command_line_args: PAnsiChar; num_command_line_args: Integer; unsaved_files: ^CXUnsavedFile; num_unsaved_files: Cardinal; options: Cardinal): CXTranslationUnit; cdecl; external CLangLibrary name 'clang_parseTranslationUnit';
 {$ENDIF}
   
 (*
@@ -1821,9 +1822,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_defaultSaveOptions(CXTranslationUnit TU);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_defaultSaveOptions = function(TU: CXTranslationUnit): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_defaultSaveOptions(TU: CXTranslationUnit): Cardinal; cdecl; external CLangLibrary name 'clang_defaultSaveOptions';
 {$ENDIF}
 
 (*
@@ -1894,9 +1895,9 @@ type
   //                                             const char *FileName,
   //                                             unsigned options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_saveTranslationUnit = function(TU: CXTranslationUnit; FileName: PAnsiChar; options: Cardinal): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_saveTranslationUnit(TU: CXTranslationUnit; FileName: PAnsiChar; options: Cardinal): Integer; cdecl; external CLangLibrary name 'clang_saveTranslationUnit';
 {$ENDIF}
 
 (*
@@ -1904,9 +1905,9 @@ type
  *)
   //CINDEX_LINKAGE void clang_disposeTranslationUnit(CXTranslationUnit);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeTranslationUnit = procedure(unknown: CXTranslationUnit); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeTranslationUnit(unknown: CXTranslationUnit); cdecl; external CLangLibrary name 'clang_disposeTranslationUnit';
 {$ENDIF}
 
 (*
@@ -1938,9 +1939,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_defaultReparseOptions(CXTranslationUnit TU);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_defaultReparseOptions = function(TU: CXTranslationUnit): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_defaultReparseOptions(TU: CXTranslationUnit): Cardinal; cdecl; external CLangLibrary name 'clang_defaultReparseOptions';
 {$ENDIF}
 
 (*
@@ -1986,9 +1987,9 @@ type
   //                                          struct CXUnsavedFile *unsaved_files,
   //                                                unsigned options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_reparseTranslationUnit = function(TU: CXTranslationUnit; num_unsaved_files: Cardinal; unsaved_files: ^CXUnsavedFile; options: Cardinal): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_reparseTranslationUnit(TU: CXTranslationUnit; num_unsaved_files: Cardinal; unsaved_files: ^CXUnsavedFile; options: Cardinal): Integer; cdecl; external CLangLibrary name 'clang_reparseTranslationUnit';
 {$ENDIF}
 
 (*
@@ -2046,9 +2047,9 @@ type
   //CINDEX_LINKAGE
   //const char *clang_getTUResourceUsageName(enum CXTUResourceUsageKind kind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): PAnsiChar; cdecl;
+  Tclang_getTUResourceUsageName = function(kind: CXTUResourceUsageKind): PAnsiChar; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): PAnsiChar; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTUResourceUsageName(kind: CXTUResourceUsageKind): PAnsiChar; cdecl; external CLangLibrary name 'clang_getTUResourceUsageName';
 {$ENDIF}
 
   //typedef struct CXTUResourceUsageEntry {
@@ -2090,16 +2091,16 @@ type
   *)
   //CINDEX_LINKAGE CXTUResourceUsage clang_getCXTUResourceUsage(CXTranslationUnit TU);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTUResourceUsage; cdecl;
+  Tclang_getCXTUResourceUsage = function(TU: CXTranslationUnit): CXTUResourceUsage; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTUResourceUsage; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCXTUResourceUsage(TU: CXTranslationUnit): CXTUResourceUsage; cdecl; external CLangLibrary name 'clang_getCXTUResourceUsage';
 {$ENDIF}
 
   //CINDEX_LINKAGE void clang_disposeCXTUResourceUsage(CXTUResourceUsage usage);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeCXTUResourceUsage = procedure(usage: CXTUResourceUsage); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeCXTUResourceUsage(usage: CXTUResourceUsage); cdecl; external CLangLibrary name 'clang_disposeCXTUResourceUsage';
 {$ENDIF}
 
 (*
@@ -3001,9 +3002,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getNullCursor(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getNullCursor = function(): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNullCursor(): CXCursor; cdecl; external CLangLibrary name 'clang_getNullCursor';
 {$ENDIF}
 
 (*
@@ -3014,9 +3015,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getTranslationUnitCursor(CXTranslationUnit);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getTranslationUnitCursor = function(unknown: CXTranslationUnit): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTranslationUnitCursor(unknown: CXTranslationUnit): CXCursor; cdecl; external CLangLibrary name 'clang_getTranslationUnitCursor';
 {$ENDIF}
 
 (*
@@ -3024,9 +3025,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_equalCursors(CXCursor, CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_equalCursors = function(unknown: CXCursor; unknown_: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_equalCursors(unknown: CXCursor; unknown_: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_equalCursors';
 {$ENDIF}
 
 (*
@@ -3034,9 +3035,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_Cursor_isNull(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_Cursor_isNull = function(cursor: CXCursor): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_isNull(cursor: CXCursor): Integer; cdecl; external CLangLibrary name 'clang_Cursor_isNull';
 {$ENDIF}
 
 (*
@@ -3044,9 +3045,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_hashCursor(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_hashCursor = function(unknown: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_hashCursor(unknown: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_hashCursor';
 {$ENDIF}
   
 (*
@@ -3054,9 +3055,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE enum CXCursorKind clang_getCursorKind(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursorKind; cdecl;
+  Tclang_getCursorKind = function(unknown: CXCursor): CXCursorKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursorKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorKind(unknown: CXCursor): CXCursorKind; cdecl; external CLangLibrary name 'clang_getCursorKind';
 {$ENDIF}
 
 (*
@@ -3064,9 +3065,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isDeclaration(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isDeclaration = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isDeclaration(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isDeclaration';
 {$ENDIF}
 
 (*
@@ -3079,9 +3080,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isReference(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isReference = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isReference(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isReference';
 {$ENDIF}
 
 (*
@@ -3089,9 +3090,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isExpression(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isExpression = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isExpression(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isExpression';
 {$ENDIF}
 
 (*
@@ -3099,9 +3100,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isStatement(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isStatement = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isStatement(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isStatement';
 {$ENDIF}
 
 (*
@@ -3109,9 +3110,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isAttribute(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isAttribute = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isAttribute(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isAttribute';
 {$ENDIF}
 
 (*
@@ -3120,9 +3121,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isInvalid(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isInvalid = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isInvalid(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isInvalid';
 {$ENDIF}
 
 (*
@@ -3131,9 +3132,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isTranslationUnit(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isTranslationUnit = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isTranslationUnit(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isTranslationUnit';
 {$ENDIF}
 
 (**
@@ -3142,9 +3143,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isPreprocessing(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isPreprocessing = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isPreprocessing(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isPreprocessing';
 {$ENDIF}
   
 (**
@@ -3153,9 +3154,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isUnexposed(enum CXCursorKind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isUnexposed = function(unknown: CXCursorKind): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isUnexposed(unknown: CXCursorKind): Cardinal; cdecl; external CLangLibrary name 'clang_isUnexposed';
 {$ENDIF}
 
 (*
@@ -3191,9 +3192,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE enum CXLinkageKind clang_getCursorLinkage(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXLinkageKind; cdecl;
+  Tclang_getCursorLinkage = function(cursor: CXCursor): CXLinkageKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXLinkageKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorLinkage(cursor: CXCursor): CXLinkageKind; cdecl; external CLangLibrary name 'clang_getCursorLinkage';
 {$ENDIF}
 
 (*
@@ -3207,9 +3208,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE enum CXAvailabilityKind 
   //clang_getCursorAvailability(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXAvailabilityKind; cdecl;
+  Tclang_getCursorAvailability = function(cursor: CXCursor): CXAvailabilityKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXAvailabilityKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorAvailability(cursor: CXCursor): CXAvailabilityKind; cdecl; external CLangLibrary name 'clang_getCursorAvailability';
 {$ENDIF}
 
 (*
@@ -3302,9 +3303,9 @@ enum CXCursorKind {
   //                                    CXPlatformAvailability *availability,
   //                                    int availability_size);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_getCursorPlatformAvailability = function(cursor: CXCursor; var always_deprecated: Integer; var deprecated_message: CXString; var always_unavailable: Integer; var unavailable_message: CXString; availability: ^CXPlatformAvailability; availability_size: Integer): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorPlatformAvailability(cursor: CXCursor; var always_deprecated: Integer; var deprecated_message: CXString; var always_unavailable: Integer; var unavailable_message: CXString; availability: ^CXPlatformAvailability; availability_size: Integer): Integer; cdecl; external CLangLibrary name 'clang_getCursorPlatformAvailability';
 {$ENDIF}
 
 (*
@@ -3313,9 +3314,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE void
   //clang_disposeCXPlatformAvailability(CXPlatformAvailability *availability);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeCXPlatformAvailability = procedure(availability: ^CXPlatformAvailability); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeCXPlatformAvailability(availability: ^CXPlatformAvailability); cdecl; external CLangLibrary name 'clang_disposeCXPlatformAvailability';
 {$ENDIF}
   
 (*
@@ -3339,9 +3340,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE enum CXLanguageKind clang_getCursorLanguage(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXLanguageKind; cdecl;
+  Tclang_getCursorLanguage = function(cursor: CXCursor): CXLanguageKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXLanguageKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorLanguage(cursor: CXCursor): CXLanguageKind; cdecl; external CLangLibrary name 'clang_getCursorLanguage';
 {$ENDIF}
 
 (*
@@ -3349,9 +3350,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXTranslationUnit clang_Cursor_getTranslationUnit(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl;
+  Tclang_Cursor_getTranslationUnit = function(unknown: CXCursor): CXTranslationUnit; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTranslationUnit; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getTranslationUnit(unknown: CXCursor): CXTranslationUnit; cdecl; external CLangLibrary name 'clang_Cursor_getTranslationUnit';
 {$ENDIF}
 
 
@@ -3365,9 +3366,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursorSet clang_createCXCursorSet(void);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursorSet; cdecl;
+  Tclang_createCXCursorSet = function(): CXCursorSet; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursorSet; cdecl; external CLangLibrary name 'XXXX';
+  function clang_createCXCursorSet(): CXCursorSet; cdecl; external CLangLibrary name 'clang_createCXCursorSet';
 {$ENDIF}
 
 (*
@@ -3375,9 +3376,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE void clang_disposeCXCursorSet(CXCursorSet cset);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeCXCursorSet = procedure(cset: CXCursorSet); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeCXCursorSet(cset: CXCursorSet); cdecl; external CLangLibrary name 'clang_disposeCXCursorSet';
 {$ENDIF}
 
 (*
@@ -3388,9 +3389,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE unsigned clang_CXCursorSet_contains(CXCursorSet cset,
   //                                                   CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_CXCursorSet_contains = function(cset: CXCursorSet; cursor: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_CXCursorSet_contains(cset: CXCursorSet; cursor: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_CXCursorSet_contains';
 {$ENDIF}
 
 (*
@@ -3401,9 +3402,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE unsigned clang_CXCursorSet_insert(CXCursorSet cset,
   //                                                 CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_CXCursorSet_insert = function(cset: CXCursorSet; cursor: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_CXCursorSet_insert(cset: CXCursorSet; cursor: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_CXCursorSet_insert';
 {$ENDIF}
 
 (*
@@ -3441,9 +3442,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCursorSemanticParent(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCursorSemanticParent = function(cursor: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorSemanticParent(cursor: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getCursorSemanticParent';
 {$ENDIF}
 
 (*
@@ -3482,9 +3483,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCursorLexicalParent(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCursorLexicalParent = function(cursor: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorLexicalParent(cursor: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getCursorLexicalParent';
 {$ENDIF}
 
 (*
@@ -3534,9 +3535,9 @@ enum CXCursorKind {
   //                                               CXCursor **overridden,
   //                                               unsigned *num_overridden);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_getOverriddenCursors = procedure(cursor: CXCursor; var overridden: ^CXCursor; var num_overridden: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_getOverriddenCursors(cursor: CXCursor; var overridden: ^CXCursor; var num_overridden: Cardinal); cdecl; external CLangLibrary name 'clang_getOverriddenCursors';
 {$ENDIF}
 
 (*
@@ -3545,9 +3546,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE void clang_disposeOverriddenCursors(CXCursor *overridden);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeOverriddenCursors = procedure(overridden: ^CXCursor); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeOverriddenCursors(overridden: ^CXCursor); cdecl; external CLangLibrary name 'clang_disposeOverriddenCursors';
 {$ENDIF}
 
 (*
@@ -3556,9 +3557,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXFile clang_getIncludedFile(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl;
+  Tclang_getIncludedFile = function(cursor: CXCursor): CXFile; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getIncludedFile(cursor: CXCursor): CXFile; cdecl; external CLangLibrary name 'clang_getIncludedFile';
 {$ENDIF}
   
 (*
@@ -3593,9 +3594,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCursor(CXTranslationUnit, CXSourceLocation);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCursor = function(unknown: CXTranslationUnit; unknown_: CXSourceLocation): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursor(unknown: CXTranslationUnit; unknown_: CXSourceLocation): CXCursor; cdecl; external CLangLibrary name 'clang_getCursor';
 {$ENDIF}
 
 (*
@@ -3610,9 +3611,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXSourceLocation clang_getCursorLocation(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getCursorLocation = function(unknown: CXCursor): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorLocation(unknown: CXCursor): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getCursorLocation';
 {$ENDIF}
 
 (*
@@ -3628,9 +3629,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXSourceRange clang_getCursorExtent(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getCursorExtent = function(unknown: CXCursor): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorExtent(unknown: CXCursor): CXSourceRange; cdecl; external CLangLibrary name 'clang_getCursorExtent';
 {$ENDIF}
 
 (*
@@ -3810,9 +3811,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getCursorType(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getCursorType = function(C: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorType(C: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_getCursorType';
 {$ENDIF}
 
 (*
@@ -3823,9 +3824,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getTypeSpelling(CXType CT);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getTypeSpelling = function(CT: CXType): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTypeSpelling(CT: CXType): CXString; cdecl; external CLangLibrary name 'clang_getTypeSpelling';
 {$ENDIF}
 
 (*
@@ -3836,9 +3837,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getTypedefDeclUnderlyingType(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getTypedefDeclUnderlyingType = function(C: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTypedefDeclUnderlyingType(C: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_getTypedefDeclUnderlyingType';
 {$ENDIF}
 
 (*
@@ -3849,9 +3850,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getEnumDeclIntegerType(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getEnumDeclIntegerType = function(C: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getEnumDeclIntegerType(C: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_getEnumDeclIntegerType';
 {$ENDIF}
 
 (*
@@ -3864,9 +3865,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE long long clang_getEnumConstantDeclValue(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl;
+  Tclang_getEnumConstantDeclValue = function(C: CXCursor): Int64; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getEnumConstantDeclValue(C: CXCursor): Int64; cdecl; external CLangLibrary name 'clang_getEnumConstantDeclValue';
 {$ENDIF}
 
 (*
@@ -3879,9 +3880,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned long long clang_getEnumConstantDeclUnsignedValue(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): UInt64; cdecl;
+  Tclang_getEnumConstantDeclUnsignedValue = function(C: CXCursor): UInt64; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): UInt64; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getEnumConstantDeclUnsignedValue(C: CXCursor): UInt64; cdecl; external CLangLibrary name 'clang_getEnumConstantDeclUnsignedValue';
 {$ENDIF}
 
 (*
@@ -3891,9 +3892,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_getFieldDeclBitWidth(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_getFieldDeclBitWidth = function(C: CXCursor): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFieldDeclBitWidth(C: CXCursor): Integer; cdecl; external CLangLibrary name 'clang_getFieldDeclBitWidth';
 {$ENDIF}
 
 (*
@@ -3904,9 +3905,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_Cursor_getNumArguments(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_Cursor_getNumArguments = function(C: CXCursor): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getNumArguments(C: CXCursor): Integer; cdecl; external CLangLibrary name 'clang_Cursor_getNumArguments';
 {$ENDIF}
 
 (*
@@ -3917,9 +3918,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_Cursor_getArgument(CXCursor C, unsigned i);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_Cursor_getArgument = function(C: CXCursor; i: Cardinal): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getArgument(C: CXCursor; i: Cardinal): CXCursor; cdecl; external CLangLibrary name 'clang_Cursor_getArgument';
 {$ENDIF}
 
 (*
@@ -3930,9 +3931,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_equalTypes(CXType A, CXType B);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_equalTypes = function(A: CXType; B: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_equalTypes(A: CXType; B: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_equalTypes';
 {$ENDIF}
 
 (*
@@ -3945,9 +3946,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getCanonicalType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getCanonicalType = function(T: CXType): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCanonicalType(T: CXType): CXType; cdecl; external CLangLibrary name 'clang_getCanonicalType';
 {$ENDIF}
 
 (*
@@ -3957,9 +3958,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isConstQualifiedType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isConstQualifiedType = function(T: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isConstQualifiedType(T: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_isConstQualifiedType';
 {$ENDIF}
 
 (*
@@ -3969,9 +3970,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isVolatileQualifiedType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isVolatileQualifiedType = function(T: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isVolatileQualifiedType(T: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_isVolatileQualifiedType';
 {$ENDIF}
 
 (*
@@ -3981,9 +3982,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isRestrictQualifiedType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isRestrictQualifiedType = function(T: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isRestrictQualifiedType(T: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_isRestrictQualifiedType';
 {$ENDIF}
 
 (*
@@ -3991,9 +3992,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getPointeeType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getPointeeType = function(T: CXType): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getPointeeType(T: CXType): CXType; cdecl; external CLangLibrary name 'clang_getPointeeType';
 {$ENDIF}
 
 (*
@@ -4001,9 +4002,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getTypeDeclaration(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getTypeDeclaration = function(T: CXType): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTypeDeclaration(T: CXType): CXCursor; cdecl; external CLangLibrary name 'clang_getTypeDeclaration';
 {$ENDIF}
 
 (*
@@ -4011,9 +4012,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getDeclObjCTypeEncoding(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getDeclObjCTypeEncoding = function(C: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getDeclObjCTypeEncoding(C: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_getDeclObjCTypeEncoding';
 {$ENDIF}
 
 (*
@@ -4021,9 +4022,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getTypeKindSpelling(enum CXTypeKind K);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getTypeKindSpelling = function(K: CXTypeKind): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTypeKindSpelling(K: CXTypeKind): CXString; cdecl; external CLangLibrary name 'clang_getTypeKindSpelling';
 {$ENDIF}
 
 (*
@@ -4033,9 +4034,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE enum CXCallingConv clang_getFunctionTypeCallingConv(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCallingConv; cdecl;
+  Tclang_getFunctionTypeCallingConv = function(T: CXType): CXCallingConv; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCallingConv; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getFunctionTypeCallingConv(T: CXType): CXCallingConv; cdecl; external CLangLibrary name 'clang_getFunctionTypeCallingConv';
 {$ENDIF}
 
 (*
@@ -4045,9 +4046,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getResultType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getResultType = function(T: CXType): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getResultType(T: CXType): CXType; cdecl; external CLangLibrary name 'clang_getResultType';
 {$ENDIF}
 
 (*
@@ -4058,9 +4059,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_getNumArgTypes(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_getNumArgTypes = function(T: CXType): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNumArgTypes(T: CXType): Integer; cdecl; external CLangLibrary name 'clang_getNumArgTypes';
 {$ENDIF}
 
 (*
@@ -4071,9 +4072,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getArgType(CXType T, unsigned i);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getArgType = function(T: CXType; i: Cardinal): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getArgType(T: CXType; i: Cardinal): CXType; cdecl; external CLangLibrary name 'clang_getArgType';
 {$ENDIF}
 
 (*
@@ -4081,9 +4082,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isFunctionTypeVariadic(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isFunctionTypeVariadic = function(T: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isFunctionTypeVariadic(T: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_isFunctionTypeVariadic';
 {$ENDIF}
 
 (*
@@ -4093,9 +4094,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getCursorResultType(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getCursorResultType = function(C: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorResultType(C: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_getCursorResultType';
 {$ENDIF}
 
 (*
@@ -4104,9 +4105,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isPODType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isPODType = function(T: CXType): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isPODType(T: CXType): Cardinal; cdecl; external CLangLibrary name 'clang_isPODType';
 {$ENDIF}
 
 (*
@@ -4117,9 +4118,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getElementType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getElementType = function(T: CXType): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getElementType(T: CXType): CXType; cdecl; external CLangLibrary name 'clang_getElementType';
 {$ENDIF}
 
 (*
@@ -4130,9 +4131,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE long long clang_getNumElements(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl;
+  Tclang_getNumElements = function(T: CXType): Int64; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNumElements(T: CXType): Int64; cdecl; external CLangLibrary name 'clang_getNumElements';
 {$ENDIF}
 
 (*
@@ -4142,9 +4143,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getArrayElementType(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getArrayElementType = function(T: CXType): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getArrayElementType(T: CXType): CXType; cdecl; external CLangLibrary name 'clang_getArrayElementType';
 {$ENDIF}
 
 (*
@@ -4154,9 +4155,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE long long clang_getArraySize(CXType T);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl;
+  Tclang_getArraySize = function(T: CXType): Int64; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Int64; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getArraySize(T: CXType): Int64; cdecl; external CLangLibrary name 'clang_getArraySize';
 {$ENDIF}
 
 (*
@@ -4165,9 +4166,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isVirtualBase(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isVirtualBase = function(unknown: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isVirtualBase(unknown: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_isVirtualBase';
 {$ENDIF}
     
 (*
@@ -4194,9 +4195,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE enum CX_CXXAccessSpecifier clang_getCXXAccessSpecifier(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CX_CXXAccessSpecifier; cdecl;
+  Tclang_getCXXAccessSpecifier = function(unknown: CXCursor): CX_CXXAccessSpecifier; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CX_CXXAccessSpecifier; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCXXAccessSpecifier(unknown: CXCursor): CX_CXXAccessSpecifier; cdecl; external CLangLibrary name 'clang_getCXXAccessSpecifier';
 {$ENDIF}
 
 (*
@@ -4210,9 +4211,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_getNumOverloadedDecls(CXCursor cursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_getNumOverloadedDecls = function(cursor: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getNumOverloadedDecls(cursor: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_getNumOverloadedDecls';
 {$ENDIF}
 
 (*
@@ -4232,9 +4233,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE CXCursor clang_getOverloadedDecl(CXCursor cursor, 
   //                                                unsigned index);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getOverloadedDecl = function(cursor: CXCursor; index: Cardinal): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getOverloadedDecl(cursor: CXCursor; index: Cardinal): CXCursor; cdecl; external CLangLibrary name 'clang_getOverloadedDecl';
 {$ENDIF}
   
 (*
@@ -4255,9 +4256,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_getIBOutletCollectionType(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_getIBOutletCollectionType = function(unknown: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getIBOutletCollectionType(unknown: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_getIBOutletCollectionType';
 {$ENDIF}
 
 (*
@@ -4344,9 +4345,9 @@ enum CXCursorKind {
   //                                            CXCursorVisitor visitor,
   //                                            CXClientData client_data);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_visitChildren = function(parent: CXCursor; visitor: CXCursorVisitor; client_data: CXClientData): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_visitChildren(parent: CXCursor; visitor: CXCursorVisitor; client_data: CXClientData): Cardinal; cdecl; external CLangLibrary name 'clang_visitChildren';
 {$ENDIF}
 
   //#ifdef __has_feature
@@ -4371,9 +4372,9 @@ enum CXCursorKind {
   //unsigned clang_visitChildrenWithBlock(CXCursor parent,
   //                                      CXCursorVisitorBlock block);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_visitChildrenWithBlock = function(parent: CXCursor; block: CXCursorVisitorBlock): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_visitChildrenWithBlock(parent: CXCursor; block: CXCursorVisitorBlock): Cardinal; cdecl; external CLangLibrary name 'clang_visitChildrenWithBlock';
 {$ENDIF}
 
   //#  endif
@@ -4405,9 +4406,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getCursorUSR(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getCursorUSR = function(unknown: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorUSR(unknown: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_getCursorUSR';
 {$ENDIF}
 
 (*
@@ -4415,9 +4416,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_constructUSR_ObjCClass(const char *class_name);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCClass = function(class_name: PAnsiChar): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCClass(class_name: PAnsiChar): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCClass';
 {$ENDIF}
 
 (*
@@ -4427,9 +4428,9 @@ enum CXCursorKind {
   //clang_constructUSR_ObjCCategory(const char *class_name,
   //                                const char *category_name);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCCategory = function(class_name: PAnsiChar; category_name: PAnsiChar): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCCategory(class_name: PAnsiChar; category_name: PAnsiChar): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCCategory';
 {$ENDIF}
 
 (*
@@ -4438,9 +4439,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE CXString
   //clang_constructUSR_ObjCProtocol(const char *protocol_name);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCProtocol = function(protocol_name: PAnsiChar): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCProtocol(protocol_name: PAnsiChar): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCProtocol';
 {$ENDIF}
 
 
@@ -4451,9 +4452,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE CXString clang_constructUSR_ObjCIvar(const char *name,
   //                                                    CXString classUSR);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCIvar = function(name: PAnsiChar; classUSR: CXString): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCIvar(name: PAnsiChar; classUSR: CXString): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCIvar';
 {$ENDIF}
 
 (*
@@ -4464,9 +4465,9 @@ enum CXCursorKind {
   //                                                      unsigned isInstanceMethod,
   //                                                      CXString classUSR);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCMethod = function(name: PAnsiChar; isInstanceMethod: Cardinal; classUSR: CXString): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCMethod(name: PAnsiChar; isInstanceMethod: Cardinal; classUSR: CXString): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCMethod';
 {$ENDIF}
 
 (*
@@ -4476,9 +4477,9 @@ enum CXCursorKind {
   //CINDEX_LINKAGE CXString clang_constructUSR_ObjCProperty(const char *property,
   //                                                        CXString classUSR);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_constructUSR_ObjCProperty = function(property_: PAnsiChar; classUSR: CXString): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_constructUSR_ObjCProperty(property_: PAnsiChar; classUSR: CXString): CXString; cdecl; external CLangLibrary name 'clang_constructUSR_ObjCProperty';
 {$ENDIF}
 
 (*
@@ -4486,9 +4487,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getCursorSpelling(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getCursorSpelling = function(unknown: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorSpelling(unknown: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_getCursorSpelling';
 {$ENDIF}
 
 (*
@@ -4506,9 +4507,9 @@ enum CXCursorKind {
   //                                                          unsigned pieceIndex,
   //                                                          unsigned options);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_Cursor_getSpellingNameRange = function(unknown: CXCursor; pieceIndex: Cardinal; options: Cardinal): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getSpellingNameRange(unknown: CXCursor; pieceIndex: Cardinal; options: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'clang_Cursor_getSpellingNameRange';
 {$ENDIF}
 
 (*
@@ -4520,9 +4521,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_getCursorDisplayName(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getCursorDisplayName = function(unknown: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorDisplayName(unknown: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_getCursorDisplayName';
 {$ENDIF}
   
 (* \brief For a cursor that is a reference, retrieve a cursor representing the
@@ -4537,9 +4538,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCursorReferenced(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCursorReferenced = function(unknown: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorReferenced(unknown: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getCursorReferenced';
 {$ENDIF}
 
 (*
@@ -4572,9 +4573,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCursorDefinition(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCursorDefinition = function(unknown: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorDefinition(unknown: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getCursorDefinition';
 {$ENDIF}
 
 (*
@@ -4583,9 +4584,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE unsigned clang_isCursorDefinition(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_isCursorDefinition = function(unknown: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_isCursorDefinition(unknown: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_isCursorDefinition';
 {$ENDIF}
 
 (*
@@ -4614,9 +4615,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXCursor clang_getCanonicalCursor(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getCanonicalCursor = function(unknown: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCanonicalCursor(unknown: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getCanonicalCursor';
 {$ENDIF}
 
 
@@ -4633,9 +4634,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_Cursor_getObjCSelectorIndex(CXCursor);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_Cursor_getObjCSelectorIndex = function(unknown: CXCursor): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getObjCSelectorIndex(unknown: CXCursor): Integer; cdecl; external CLangLibrary name 'clang_Cursor_getObjCSelectorIndex';
 {$ENDIF}
 
 (*
@@ -4651,9 +4652,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE int clang_Cursor_isDynamicCall(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl;
+  Tclang_Cursor_isDynamicCall = function(C: CXCursor): Integer; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Integer; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_isDynamicCall(C: CXCursor): Integer; cdecl; external CLangLibrary name 'clang_Cursor_isDynamicCall';
 {$ENDIF}
 
 (*
@@ -4662,9 +4663,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXType clang_Cursor_getReceiverType(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl;
+  Tclang_Cursor_getReceiverType = function(C: CXCursor): CXType; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXType; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getReceiverType(C: CXCursor): CXType; cdecl; external CLangLibrary name 'clang_Cursor_getReceiverType';
 {$ENDIF}
 
 (*
@@ -4674,9 +4675,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXSourceRange clang_Cursor_getCommentRange(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_Cursor_getCommentRange = function(C: CXCursor): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getCommentRange(C: CXCursor): CXSourceRange; cdecl; external CLangLibrary name 'clang_Cursor_getCommentRange';
 {$ENDIF}
 
 (*
@@ -4685,9 +4686,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_Cursor_getRawCommentText(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_Cursor_getRawCommentText = function(C: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getRawCommentText(C: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_Cursor_getRawCommentText';
 {$ENDIF}
 
 (*
@@ -4697,9 +4698,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXString clang_Cursor_getBriefCommentText(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_Cursor_getBriefCommentText = function(C: CXCursor): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getBriefCommentText(C: CXCursor): CXString; cdecl; external CLangLibrary name 'clang_Cursor_getBriefCommentText';
 {$ENDIF}
 
 (*
@@ -4709,9 +4710,9 @@ enum CXCursorKind {
  *)
   //CINDEX_LINKAGE CXComment clang_Cursor_getParsedComment(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl;
+  Tclang_Cursor_getParsedComment = function(C: CXCursor): CXComment; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getParsedComment(C: CXCursor): CXComment; cdecl; external CLangLibrary name 'clang_Cursor_getParsedComment';
 {$ENDIF}
 
 (*
@@ -4734,9 +4735,9 @@ type
  *)
   //CINDEX_LINKAGE CXModule clang_Cursor_getModule(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXModule; cdecl;
+  Tclang_Cursor_getModule = function(C: CXCursor): CXModule; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXModule; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Cursor_getModule(C: CXCursor): CXModule; cdecl; external CLangLibrary name 'clang_Cursor_getModule';
 {$ENDIF}
 
 (*
@@ -4747,9 +4748,9 @@ type
  *)
   //CINDEX_LINKAGE CXModule clang_Module_getParent(CXModule Module);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXModule; cdecl;
+  Tclang_Module_getParent = function(Module: CXModule): CXModule; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXModule; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Module_getParent(Module: CXModule): CXModule; cdecl; external CLangLibrary name 'clang_Module_getParent';
 {$ENDIF}
 
 (*
@@ -4760,9 +4761,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_Module_getName(CXModule Module);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_Module_getName = function(Module: CXModule): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Module_getName(Module: CXModule): CXString; cdecl; external CLangLibrary name 'clang_Module_getName';
 {$ENDIF}
 
 (*
@@ -4772,9 +4773,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_Module_getFullName(CXModule Module);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_Module_getFullName = function(Module: CXModule): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Module_getFullName(Module: CXModule): CXString; cdecl; external CLangLibrary name 'clang_Module_getFullName';
 {$ENDIF}
 
 (*
@@ -4784,9 +4785,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_Module_getNumTopLevelHeaders(CXModule Module);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_Module_getNumTopLevelHeaders = function(Module: CXModule): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Module_getNumTopLevelHeaders(Module: CXModule): Cardinal; cdecl; external CLangLibrary name 'clang_Module_getNumTopLevelHeaders';
 {$ENDIF}
 
 (*
@@ -4799,9 +4800,9 @@ type
   //CINDEX_LINKAGE
   //CXFile clang_Module_getTopLevelHeader(CXModule Module, unsigned Index);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl;
+  Tclang_Module_getTopLevelHeader = function(unknown: CXCompileCommand; Index: Cardinal): CXFile; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXFile; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Module_getTopLevelHeader(unknown: CXCompileCommand; Index: Cardinal): CXFile; cdecl; external CLangLibrary name 'clang_Module_getTopLevelHeader';
 {$ENDIF}
 
 (*
@@ -5009,9 +5010,9 @@ type
  *)
   //CINDEX_LINKAGE enum CXCommentKind clang_Comment_getKind(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCommentKind; cdecl;
+  Tclang_Comment_getKind = function(Comment: CXComment): CXCommentKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCommentKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Comment_getKind(Comment: CXComment): CXCommentKind; cdecl; external CLangLibrary name 'clang_Comment_getKind';
 {$ENDIF}
 
 (*
@@ -5021,9 +5022,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_Comment_getNumChildren(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_Comment_getNumChildren = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Comment_getNumChildren(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_Comment_getNumChildren';
 {$ENDIF}
 
 (*
@@ -5036,9 +5037,9 @@ type
   //CINDEX_LINKAGE
   //CXComment clang_Comment_getChild(CXComment Comment, unsigned ChildIdx);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl;
+  Tclang_Comment_getChild = function(Comment: CXComment; ChildIdx: Cardinal): CXComment; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Comment_getChild(Comment: CXComment; ChildIdx: Cardinal): CXComment; cdecl; external CLangLibrary name 'clang_Comment_getChild';
 {$ENDIF}
 
 (*
@@ -5052,9 +5053,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_Comment_isWhitespace(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_Comment_isWhitespace = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_Comment_isWhitespace(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_Comment_isWhitespace';
 {$ENDIF}
 
 (*
@@ -5065,9 +5066,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_InlineContentComment_hasTrailingNewline(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_InlineContentComment_hasTrailingNewline = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_InlineContentComment_hasTrailingNewline(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_InlineContentComment_hasTrailingNewline';
 {$ENDIF}
 
 (*
@@ -5077,9 +5078,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_TextComment_getText(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_TextComment_getText = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_TextComment_getText(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_TextComment_getText';
 {$ENDIF}
 
 (*
@@ -5090,9 +5091,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_InlineCommandComment_getCommandName(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_InlineCommandComment_getCommandName = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_InlineCommandComment_getCommandName(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_InlineCommandComment_getCommandName';
 {$ENDIF}
 
 (*
@@ -5104,9 +5105,9 @@ type
   //CINDEX_LINKAGE enum CXCommentInlineCommandRenderKind
   //clang_InlineCommandComment_getRenderKind(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCommentInlineCommandRenderKind; cdecl;
+  Tclang_InlineCommandComment_getRenderKind = function(Comment: CXComment): CXCommentInlineCommandRenderKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCommentInlineCommandRenderKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_InlineCommandComment_getRenderKind(Comment: CXComment): CXCommentInlineCommandRenderKind; cdecl; external CLangLibrary name 'clang_InlineCommandComment_getRenderKind';
 {$ENDIF}
 
 (*
@@ -5117,9 +5118,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_InlineCommandComment_getNumArgs(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_InlineCommandComment_getNumArgs = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_InlineCommandComment_getNumArgs(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_InlineCommandComment_getNumArgs';
 {$ENDIF}
 
 (*
@@ -5133,9 +5134,9 @@ type
   //CXString clang_InlineCommandComment_getArgText(CXComment Comment,
   //                                               unsigned ArgIdx);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_InlineCommandComment_getArgText = function(Comment: CXComment; ArgIdx: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_InlineCommandComment_getArgText(Comment: CXComment; ArgIdx: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_InlineCommandComment_getArgText';
 {$ENDIF}
 
 (*
@@ -5146,9 +5147,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_HTMLTagComment_getTagName(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_HTMLTagComment_getTagName = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLTagComment_getTagName(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_HTMLTagComment_getTagName';
 {$ENDIF}
 
 (*
@@ -5159,9 +5160,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_HTMLStartTagComment_isSelfClosing(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_HTMLStartTagComment_isSelfClosing = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLStartTagComment_isSelfClosing(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_HTMLStartTagComment_isSelfClosing';
 {$ENDIF}
 
 (*
@@ -5171,9 +5172,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_HTMLStartTag_getNumAttrs(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_HTMLStartTag_getNumAttrs = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLStartTag_getNumAttrs(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_HTMLStartTag_getNumAttrs';
 {$ENDIF}
 
 (*
@@ -5186,9 +5187,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_HTMLStartTag_getAttrName(CXComment Comment, unsigned AttrIdx);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_HTMLStartTag_getAttrName = function(Comment: CXComment; AttrIdx: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLStartTag_getAttrName(Comment: CXComment; AttrIdx: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_HTMLStartTag_getAttrName';
 {$ENDIF}
 
 (*
@@ -5201,9 +5202,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_HTMLStartTag_getAttrValue(CXComment Comment, unsigned AttrIdx);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_HTMLStartTag_getAttrValue = function(Comment: CXComment; AttrIdx: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLStartTag_getAttrValue(Comment: CXComment; AttrIdx: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_HTMLStartTag_getAttrValue';
 {$ENDIF}
 
 (*
@@ -5214,9 +5215,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_BlockCommandComment_getCommandName(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_BlockCommandComment_getCommandName = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_BlockCommandComment_getCommandName(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_BlockCommandComment_getCommandName';
 {$ENDIF}
 
 (*
@@ -5227,9 +5228,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_BlockCommandComment_getNumArgs(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_BlockCommandComment_getNumArgs = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_BlockCommandComment_getNumArgs(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_BlockCommandComment_getNumArgs';
 {$ENDIF}
 
 (*
@@ -5243,9 +5244,9 @@ type
   //CXString clang_BlockCommandComment_getArgText(CXComment Comment,
   //                                              unsigned ArgIdx);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_BlockCommandComment_getArgText = function(Comment: CXComment; ArgIdx: Cardinal): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_BlockCommandComment_getArgText(Comment: CXComment; ArgIdx: Cardinal): CXString; cdecl; external CLangLibrary name 'clang_BlockCommandComment_getArgText';
 {$ENDIF}
 
 (*
@@ -5257,9 +5258,9 @@ type
   //CINDEX_LINKAGE
   //CXComment clang_BlockCommandComment_getParagraph(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl;
+  Tclang_BlockCommandComment_getParagraph = function(Comment: CXComment): CXComment; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXComment; cdecl; external CLangLibrary name 'XXXX';
+  function clang_BlockCommandComment_getParagraph(Comment: CXComment): CXComment; cdecl; external CLangLibrary name 'clang_BlockCommandComment_getParagraph';
 {$ENDIF}
 
 (*
@@ -5270,9 +5271,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_ParamCommandComment_getParamName(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_ParamCommandComment_getParamName = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_ParamCommandComment_getParamName(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_ParamCommandComment_getParamName';
 {$ENDIF}
 
 (*
@@ -5285,9 +5286,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_ParamCommandComment_isParamIndexValid(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_ParamCommandComment_isParamIndexValid = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_ParamCommandComment_isParamIndexValid(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_ParamCommandComment_isParamIndexValid';
 {$ENDIF}
 
 (*
@@ -5298,9 +5299,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_ParamCommandComment_getParamIndex(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_ParamCommandComment_getParamIndex = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_ParamCommandComment_getParamIndex(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_ParamCommandComment_getParamIndex';
 {$ENDIF}
 
 (*
@@ -5312,9 +5313,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_ParamCommandComment_isDirectionExplicit(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_ParamCommandComment_isDirectionExplicit = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_ParamCommandComment_isDirectionExplicit(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_ParamCommandComment_isDirectionExplicit';
 {$ENDIF}
 
 (*
@@ -5326,9 +5327,9 @@ type
   //enum CXCommentParamPassDirection clang_ParamCommandComment_getDirection(
   //                                                            CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCommentParamPassDirection; cdecl;
+  Tclang_ParamCommandComment_getDirection = function(Comment: CXComment): CXCommentParamPassDirection; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCommentParamPassDirection; cdecl; external CLangLibrary name 'XXXX';
+  function clang_ParamCommandComment_getDirection(Comment: CXComment): CXCommentParamPassDirection; cdecl; external CLangLibrary name 'clang_ParamCommandComment_getDirection';
 {$ENDIF}
 
 (*
@@ -5339,9 +5340,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_TParamCommandComment_getParamName(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_TParamCommandComment_getParamName = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_TParamCommandComment_getParamName(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_TParamCommandComment_getParamName';
 {$ENDIF}
 
 (*
@@ -5356,9 +5357,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_TParamCommandComment_isParamPositionValid(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_TParamCommandComment_isParamPositionValid = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_TParamCommandComment_isParamPositionValid(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_TParamCommandComment_isParamPositionValid';
 {$ENDIF}
 
 (*
@@ -5377,9 +5378,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_TParamCommandComment_getDepth(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_TParamCommandComment_getDepth = function(Comment: CXComment): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_TParamCommandComment_getDepth(Comment: CXComment): Cardinal; cdecl; external CLangLibrary name 'clang_TParamCommandComment_getDepth';
 {$ENDIF}
 
 (*
@@ -5403,9 +5404,9 @@ type
   //CINDEX_LINKAGE
   //unsigned clang_TParamCommandComment_getIndex(CXComment Comment, unsigned Depth);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_TParamCommandComment_getIndex = function(Comment: CXComment; Depth: Cardinal): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_TParamCommandComment_getIndex(Comment: CXComment; Depth: Cardinal): Cardinal; cdecl; external CLangLibrary name 'clang_TParamCommandComment_getIndex';
 {$ENDIF}
 
 (*
@@ -5416,9 +5417,9 @@ type
   //CINDEX_LINKAGE
   //CXString clang_VerbatimBlockLineComment_getText(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_VerbatimBlockLineComment_getText = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_VerbatimBlockLineComment_getText(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_VerbatimBlockLineComment_getText';
 {$ENDIF}
 
 (*
@@ -5428,9 +5429,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_VerbatimLineComment_getText(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_VerbatimLineComment_getText = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_VerbatimLineComment_getText(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_VerbatimLineComment_getText';
 {$ENDIF}
 
 (*
@@ -5443,9 +5444,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_HTMLTagComment_getAsString(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_HTMLTagComment_getAsString = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_HTMLTagComment_getAsString(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_HTMLTagComment_getAsString';
 {$ENDIF}
 
 (*
@@ -5481,9 +5482,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_FullComment_getAsHTML(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_FullComment_getAsHTML = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_FullComment_getAsHTML(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_FullComment_getAsHTML';
 {$ENDIF}
 
 (*
@@ -5498,9 +5499,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_FullComment_getAsXML(CXComment Comment);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_FullComment_getAsXML = function(Comment: CXComment): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_FullComment_getAsXML(Comment: CXComment): CXString; cdecl; external CLangLibrary name 'clang_FullComment_getAsXML';
 {$ENDIF}
 
 (*
@@ -5522,9 +5523,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_CXXMethod_isStatic(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_CXXMethod_isStatic = function(C: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_CXXMethod_isStatic(C: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_CXXMethod_isStatic';
 {$ENDIF}
 
 (*
@@ -5534,9 +5535,9 @@ type
  *)
   //CINDEX_LINKAGE unsigned clang_CXXMethod_isVirtual(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl;
+  Tclang_CXXMethod_isVirtual = function(C: CXCursor): Cardinal; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): Cardinal; cdecl; external CLangLibrary name 'XXXX';
+  function clang_CXXMethod_isVirtual(C: CXCursor): Cardinal; cdecl; external CLangLibrary name 'clang_CXXMethod_isVirtual';
 {$ENDIF}
 
 (*
@@ -5558,9 +5559,9 @@ type
  *)
   //CINDEX_LINKAGE enum CXCursorKind clang_getTemplateCursorKind(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursorKind; cdecl;
+  Tclang_getTemplateCursorKind = function(C: CXCursor): CXCursorKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursorKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTemplateCursorKind(C: CXCursor): CXCursorKind; cdecl; external CLangLibrary name 'clang_getTemplateCursorKind';
 {$ENDIF}
   
 (*
@@ -5593,9 +5594,9 @@ type
  *)
   //CINDEX_LINKAGE CXCursor clang_getSpecializedCursorTemplate(CXCursor C);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl;
+  Tclang_getSpecializedCursorTemplate = function(C: CXCursor): CXCursor; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXCursor; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getSpecializedCursorTemplate(C: CXCursor): CXCursor; cdecl; external CLangLibrary name 'clang_getSpecializedCursorTemplate';
 {$ENDIF}
 
 (*
@@ -5620,9 +5621,9 @@ type
   //                                                unsigned NameFlags, 
   //                                                unsigned PieceIndex);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getCursorReferenceNameRange = function(C: CXCursor; NameFlags: Cardinal; PieceIndex: Cardinal): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorReferenceNameRange(C: CXCursor; NameFlags: Cardinal; PieceIndex: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'clang_getCursorReferenceNameRange';
 {$ENDIF}
 
 //enum CXNameRefFlags {
@@ -5724,9 +5725,9 @@ type
  *)
   //CINDEX_LINKAGE CXTokenKind clang_getTokenKind(CXToken);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXTokenKind; cdecl;
+  Tclang_getTokenKind = function(unknown: CXToken): CXTokenKind; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXTokenKind; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTokenKind(unknown: CXToken): CXTokenKind; cdecl; external CLangLibrary name 'clang_getTokenKind';
 {$ENDIF}
 
 (*
@@ -5737,9 +5738,9 @@ type
  *)
   //CINDEX_LINKAGE CXString clang_getTokenSpelling(CXTranslationUnit, CXToken);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getTokenSpelling = function(unknown: CXTranslationUnit; unknown_: CXToken): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTokenSpelling(unknown: CXTranslationUnit; unknown_: CXToken): CXString; cdecl; external CLangLibrary name 'clang_getTokenSpelling';
 {$ENDIF}
 
 (*
@@ -5748,9 +5749,9 @@ type
   //CINDEX_LINKAGE CXSourceLocation clang_getTokenLocation(CXTranslationUnit,
   //                                                       CXToken);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl;
+  Tclang_getTokenLocation = function(unknown: CXTranslationUnit; unknown_: CXToken): CXSourceLocation; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceLocation; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTokenLocation(unknown: CXTranslationUnit; unknown_: CXToken): CXSourceLocation; cdecl; external CLangLibrary name 'clang_getTokenLocation';
 {$ENDIF}
 
 (*
@@ -5758,9 +5759,9 @@ type
  *)
   //CINDEX_LINKAGE CXSourceRange clang_getTokenExtent(CXTranslationUnit, CXToken);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl;
+  Tclang_getTokenExtent = function(unknown: CXTranslationUnit; unknown_: CXToken): CXSourceRange; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXSourceRange; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getTokenExtent(unknown: CXTranslationUnit; unknown_: CXToken): CXSourceRange; cdecl; external CLangLibrary name 'clang_getTokenExtent';
 {$ENDIF}
 
 (*
@@ -5783,9 +5784,9 @@ type
   //CINDEX_LINKAGE void clang_tokenize(CXTranslationUnit TU, CXSourceRange Range,
   //                                   CXToken **Tokens, unsigned *NumTokens);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_tokenize = procedure(TU: CXTranslationUnit; I: CXSourceRange; var Tokens: ^CXToken; var NumTokens: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_tokenize(TU: CXTranslationUnit; I: CXSourceRange; var Tokens: ^CXToken; var NumTokens: Cardinal); cdecl; external CLangLibrary name 'clang_tokenize';
 {$ENDIF}
 
 (*
@@ -5822,9 +5823,9 @@ type
   //                                         CXToken *Tokens, unsigned NumTokens,
   //                                         CXCursor *Cursors);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_annotateTokens = procedure(TU: CXTranslationUnit; Tokens: ^CXToken; NumTokens: Cardinal; Cursors: ^CXCursor); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_annotateTokens(TU: CXTranslationUnit; Tokens: ^CXToken; NumTokens: Cardinal; Cursors: ^CXCursor); cdecl; external CLangLibrary name 'clang_annotateTokens';
 {$ENDIF}
 
 (*
@@ -5833,9 +5834,9 @@ type
   //CINDEX_LINKAGE void clang_disposeTokens(CXTranslationUnit TU,
   //                                        CXToken *Tokens, unsigned NumTokens);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = procedure(unknown: CXCompileCommand; I: Cardinal); cdecl;
+  Tclang_disposeTokens = procedure(TU: CXTranslationUnit; Tokens: ^CXToken; NumTokens: Cardinal); cdecl;
 {$ELSE}
-  procedure XXXX(unknown: CXCompileCommand; I: Cardinal); cdecl; external CLangLibrary name 'XXXX';
+  procedure clang_disposeTokens(TU: CXTranslationUnit; Tokens: ^CXToken; NumTokens: Cardinal); cdecl; external CLangLibrary name 'clang_disposeTokens';
 {$ENDIF}
 
 (*
@@ -5854,9 +5855,9 @@ type
 (* for debug/testing *)
   //CINDEX_LINKAGE CXString clang_getCursorKindSpelling(enum CXCursorKind Kind);
 {$IFDEF CLANG_DYNAMIC_LINK}
-  T = function(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl;
+  Tclang_getCursorKindSpelling = function(Kind: CXCursorKind): CXString; cdecl;
 {$ELSE}
-  function XXXX(unknown: CXCompileCommand; I: Cardinal): CXString; cdecl; external CLangLibrary name 'XXXX';
+  function clang_getCursorKindSpelling(Kind: CXCursorKind): CXString; cdecl; external CLangLibrary name 'clang_getCursorKindSpelling';
 {$ENDIF}
 
   //CINDEX_LINKAGE void clang_getDefinitionSpellingAndExtent(CXCursor,
